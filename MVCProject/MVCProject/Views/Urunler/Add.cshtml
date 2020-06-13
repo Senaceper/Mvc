@@ -1,0 +1,70 @@
+﻿@model denemee.Models.Urunler
+
+@{
+    ViewBag.Title = "Yeni ürün";
+}
+
+<h2>Yeni ürün</h2>
+<br /><br />
+<form action="/Urunler/Add" method="post" enctype="multipart/form-data">
+    <label>Urün Adı</label>
+    <br />
+    <input type="text" name="UrunName" />
+    <br />
+    <br />
+    <label>Urün Fiyatı</label>
+    <br />
+    <input type="number" name="UrunFiyat" />
+    <br />
+    <br />
+    <label>Urün Resmi</label>
+    <br />
+    <input type="file" name="urunresim" />
+    <br />
+    <br />
+    <label>Urün Açıklaması</label>
+    <br />
+    <input type="text" name="UrunAciklama" />
+    <br />
+    <br />
+
+    <select name="UrunKategoriID">
+        @{
+            BaglantiBilgileri b = new BaglantiBilgileri();
+
+            System.Data.SqlClient.SqlCommand com = new System.Data.SqlClient.SqlCommand("select KategoriID, Kname from Kategori", b.Baglanti);
+
+            if (com.Connection.State == System.Data.ConnectionState.Closed)
+            {
+                com.Connection.Open();
+            }
+
+            System.Data.SqlClient.SqlDataReader dr = com.ExecuteReader();
+
+            if (dr.HasRows)
+            {
+
+                while (dr.Read())
+                {
+                    <option value="@dr[0]">@dr[1].ToString()</option>
+
+                }
+            }
+            else
+            {
+
+            }
+
+            dr.Close();
+            com.Connection.Close();
+
+        }
+    </select>
+
+    <input type="submit" value="Kaydet" />
+
+
+
+
+</form>
+

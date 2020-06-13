@@ -1,0 +1,99 @@
+﻿@model denemee.Models.Urunler
+
+@{
+    ViewBag.Title = "Detay";
+}
+
+<h2>Detay</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        section .sepeteekle {
+            background-color: #FF7F6C;
+            height: 30px;
+            -moz-border-radius: 75px;
+            -webkit-border-radius: 75px;
+            width: 30px;
+            font-size: 20px;
+            color: white;
+            float: right;
+            margin-right: 15px;
+            transition: 500ms;
+        }
+
+            section .sepeteekle span {
+                display: none;
+                transition: 300ms;
+                font-family: arial;
+                padding: 0px;
+                margin: 0px;
+                padding-top: 5px;
+                text-align: center;
+            }
+
+            section .sepeteekle:hover {
+                width: 150px;
+            }
+
+            section .sepeteekle .icon {
+                display: block;
+            }
+
+            section .sepeteekle:hover .icon {
+                display: none;
+            }
+
+            section .sepeteekle:hover span {
+                display: block;
+            }
+    </style>
+</head>
+
+<body>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.UrunName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UrunName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UrunFiyat)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UrunFiyat)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UrunResmi)
+            </dt>
+
+            <dd>
+                <img src="~/resimler/@Html.DisplayFor(model => model.UrunResmi)">
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UrunAciklama)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UrunAciklama)
+            </dd>
+        </dl>
+
+        <section>
+            <a href=@Url.Action("SepetEkle","Urunler", new { id = Model.UrunID })>
+                <div style=" " class=" sepeteekle">
+                    <span>Sepete Ekle</span><span class="icon"> <img src="~/resimler/sepet.png" style="width:60% ; height:100% " /></span>
+                </div>
+            </a>
+        </section>
+    </div>
+</body>
+</html>

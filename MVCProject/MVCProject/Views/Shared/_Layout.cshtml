@@ -1,0 +1,141 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .dropbtn {
+            background-color: #151414;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+             display: none;
+             position: absolute;
+             background-color: #f1f1f1;
+             min-width: 160px;
+             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0);
+             z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #ddd;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #151414;
+        }
+    </style>
+    
+   
+</head>
+<body>
+    @if(Session["UserName"]!=null && Session["YoneticiName"]==null)
+    { 
+    <div class="dropdown">
+        <button class="dropbtn">Kategoriler</button>
+        <div class="dropdown-content">
+                        @{
+                BaglantiBilgileri b = new BaglantiBilgileri();
+                System.Data.SqlClient.SqlCommand com = new System.Data.SqlClient.SqlCommand("select KategoriID, Kname from Kategori", b.Baglanti);
+                if (com.Connection.State == System.Data.ConnectionState.Closed)
+                {
+                    com.Connection.Open();
+                }
+
+                System.Data.SqlClient.SqlDataReader dr = com.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+
+                    while (dr.Read())
+                    {
+                        <a href="@Url.Action("IDListele", "Urunler", new { id = dr[0] })">@dr[1].ToString()</a>
+                     }
+                  }
+
+                            dr.Close();
+                            com.Connection.Close();
+                           }
+
+        </div>
+    </div>
+    }
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("TEKMAR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Anasayfa", "Index", "Home")</li>
+
+                        
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    
+                    @if (Session["UserName"] == null && Session["YoneticiName"] == null)
+                    {
+
+                        <li>@Html.ActionLink("Üye Girişi", "UyeGiris", "Home")</li>
+                        <li>@Html.ActionLink("Yönetici Girişi","YoneticiGiris","Yonetici")</li>
+                    }
+                    else if (Session["YoneticiName"]==null && Session["UserName"]!=null)
+                    {
+                        
+                        <li>@Html.ActionLink("Sepetim", "Sepetim", "Urunler")</li>
+                        <li>@Html.ActionLink("Çıkış Yap", "Cikis", "Home")</li>
+                        
+
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Ürünlerim","Listele","Urunler")</li>
+                        <li>@Html.ActionLink("Ürün Ekle","Add","Urunler")</li>
+                        <li>@Html.ActionLink("Çıkış Yap", "Cikis", "Home")</li>
+
+                    }
+                        
+                </ul> 
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

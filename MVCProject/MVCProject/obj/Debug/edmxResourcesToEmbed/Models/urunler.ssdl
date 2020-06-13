@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StajProjeModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Kategori">
+    <Key>
+      <PropertyRef Name="KategoriID" />
+    </Key>
+    <Property Name="KategoriID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Kname" Type="nvarchar" MaxLength="60" Nullable="false" />
+    <Property Name="KAciklama" Type="nvarchar" MaxLength="60" Nullable="false" />
+    <Property Name="KResmi" Type="nvarchar" MaxLength="60" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'StajProje.dbo.Urunler' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Urunler">
+    <Key>
+      <PropertyRef Name="UrunID" />
+      <PropertyRef Name="UrunName" />
+      <PropertyRef Name="UrunFiyat" />
+      <PropertyRef Name="UrunResmi" />
+      <PropertyRef Name="UrunAciklama" />
+      <PropertyRef Name="UrunYoneticiID" />
+      <PropertyRef Name="UrunKategoriID" />
+    </Key>
+    <Property Name="UrunID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UrunName" Type="nvarchar" MaxLength="60" Nullable="false" />
+    <Property Name="UrunFiyat" Type="int" Nullable="false" />
+    <Property Name="UrunResmi" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UrunAciklama" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UrunYoneticiID" Type="int" Nullable="false" />
+    <Property Name="UrunKategoriID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Yonetici">
+    <Key>
+      <PropertyRef Name="YoneticiID" />
+    </Key>
+    <Property Name="YoneticiID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Mail" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="StajProjeModel1StoreContainer">
+    <EntitySet Name="Kategori" EntityType="Self.Kategori" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Yonetici" EntityType="Self.Yonetici" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Urunler" EntityType="Self.Urunler" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[Urunler].[UrunID] AS [UrunID], 
+[Urunler].[UrunName] AS [UrunName], 
+[Urunler].[UrunFiyat] AS [UrunFiyat], 
+[Urunler].[UrunResmi] AS [UrunResmi], 
+[Urunler].[UrunAciklama] AS [UrunAciklama], 
+[Urunler].[UrunYoneticiID] AS [UrunYoneticiID], 
+[Urunler].[UrunKategoriID] AS [UrunKategoriID]
+FROM [dbo].[Urunler] AS [Urunler]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,131 @@
+﻿@model IEnumerable<denemee.Models.Urunler>
+
+@{
+    ViewBag.Title = "Listele";
+}
+
+<h2>Listele</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <style>
+        section .urunler {
+            width: 250px;
+            margin-left: 17px;
+            margin-top: 25px;
+            height: 340px;
+            float: left;
+            text-align: center;
+            transition: 500ms;
+        }
+
+            section .urunler img {
+                height: 250px;
+                max-width: 100%;
+                text-align: center;
+                margin: 0 auto;
+            }
+
+            section .urunler span {
+                font-weight: bold;
+                font-family: cursive;
+                font-size: 16px;
+            }
+
+            section .urunler .tutar {
+                color: #FF7F6C;
+                font-size: 18px;
+            }
+
+        section .sepeteekle {
+            background-color: #FF7F6C;
+            height: 30px;
+            -moz-border-radius: 75px;
+            -webkit-border-radius: 75px;
+            width: 30px;
+            font-size: 20px;
+            color: white;
+            float: right;
+            margin-right: 15px;
+            transition: 500ms;
+        }
+
+            section .sepeteekle span {
+                display: none;
+                transition: 300ms;
+                font-family: arial;
+                padding: 0px;
+                margin: 0px;
+                padding-top: 5px;
+                text-align: center;
+            }
+
+            section .sepeteekle:hover {
+                width: 150px;
+            }
+
+            section .sepeteekle .icon {
+                display: block;
+            }
+
+            section .sepeteekle:hover .icon {
+                display: none;
+            }
+
+            section .sepeteekle:hover span {
+                display: block;
+            }
+
+
+        section .urunler:hover {
+            box-shadow: 0px 0px 37px -1px rgba(0,0,0,0.75);
+        }
+
+        section h2 {
+            color: #353526;
+            font-family: Myriad Pro;
+            text-shadow: 1px 1px 1px #FFBD2E;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section>
+        <h2><img src="images/down.png">&nbsp;&nbsp;Öne Çıkan Ürünler&nbsp;&nbsp;<img src="images/down.png"></h2>
+
+        @foreach (var item in Model)
+        {
+            if(item.UrunYoneticiID==Convert.ToInt32(Session["YoneticiName"]))
+        {
+            <div class="urunler">
+                <img src="~/resimler/@item.UrunResmi">
+                <br>
+                <span>@item.UrunName</span><br>
+                <span class="tutar">@item.UrunFiyat TL</span>
+                <br />
+                <a href=@Url.Action("Guncelle", "Urunler", new { id = item.UrunID })>
+                    <div style="" class=" sepeteekle">
+                        <span>Güncelle</span><span class="icon">G</span>
+                    </div>
+
+                </a>
+                <a href=@Url.Action("Sil", "Urunler", new { id = item.UrunID })>
+                    <div style="" class=" sepeteekle">
+                        <span>Sil</span><span class="icon">S</span>
+                    </div>
+
+                </a>
+            </div>
+        }
+        }
+
+
+    </section>
+
+</body>
+</html>
+
